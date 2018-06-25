@@ -6,6 +6,7 @@ public class recursion {
 		Scanner scan = new Scanner(System.in);
 		int input = scan.nextInt();
 		int x = factorial(input);
+		System.out.println(x);
 	}
 
 	public static int countdown(int input)
@@ -38,8 +39,7 @@ public class recursion {
 		}
 		else
 		{
-			System.out.println(input);
-			return 0;
+			return 1;
 		}
 	}
 
