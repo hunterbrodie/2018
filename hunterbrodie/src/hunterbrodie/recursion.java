@@ -4,8 +4,9 @@ public class recursion {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		int input = scan.nextInt();
-		int x = factorial(input);
+		double base = scan.nextDouble();
+		int exp = scan.nextInt();
+		double x = exponent(base, exp);
 		System.out.println(x);
 	}
 
@@ -41,6 +42,23 @@ public class recursion {
 		{
 			return 1;
 		}
+	}
+	
+	public static double exponent(double base, int exp)
+	{
+		if (exp > 0)
+		{
+			return base * exponent(base, exp - 1);
+		}
+		else if (exp < 0)
+		{
+			return 1 / exponent(base, -1 * exp);
+		}
+		else
+		{
+			return 1;
+		}
+		
 	}
 
 }
