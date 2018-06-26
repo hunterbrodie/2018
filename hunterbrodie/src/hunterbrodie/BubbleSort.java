@@ -11,19 +11,7 @@ public class BubbleSort {
 			arr[x] = rand.nextInt(50);
 		}
 		arr = sort(arr);
-		//int phold;
-		//for(int y = 0; y < arr.length; y++)
-		//{
-			//for (int x = 0; x < arr.length - 1; x++)
-			//{
-				//if (arr[x] > arr[x + 1])
-				//{
-					//phold = arr[x + 1];
-					//arr[x + 1] = arr[x];
-					//arr[x] = phold;
-				//}
-			//}
-		//}
+		
 		for (int x = 0; x < arr.length; x++)
 		{
 			System.out.println(arr[x]);
@@ -31,7 +19,7 @@ public class BubbleSort {
 	}
 	public static int[] sort(int[] arr)
 	{
-		
+		int[] newarr = new int[arr.length - 1];
 		if (arr.length == 1)
 		{
 			return arr;
@@ -47,9 +35,9 @@ public class BubbleSort {
 					arr[x + 1] = arr[x];
 					arr[x] = phold;
 				}
-				return sort(arr);
 			}
-			return arr;
+			newarr = arr;
+			return  arr = sort(newarr);
 		}
 	}
 
