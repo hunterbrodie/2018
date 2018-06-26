@@ -5,10 +5,11 @@ public class Binary_Searching {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		int[] array = new int[11];
-		for (int x = 0; x < 11; x++)
+		int arrlength = 11;
+		int[] array = new int[arrlength];
+		for (int x = 0; x < arrlength; x++)
 		{
-			array[x] = x * 2;
+			array[x] = x * 2 + 1;
 		}
 		while (true)
 		{
@@ -21,18 +22,15 @@ public class Binary_Searching {
 	public static boolean search(int[] array, int target)
 	{
 		int x = array.length / 2;
-		if ((array.length % 2) == 1 || x > 0)
+		if (target == array[x])
 		{
-			if (target == array[x])
+			return true;
+		}
+		if (array.length > 1)
+		{
+			if (target < array[x])
 			{
-				return true;
-			}
-			else if (target < array[x])
-			{
-				if (array.length % 2 == 1)
-				{
-					x++;
-				}
+				x += (array.length % 2);
 
 				int[] newarray = new int[x];
 
@@ -44,23 +42,19 @@ public class Binary_Searching {
 			}
 			else if (target > array[x])
 			{
-				if (array.length % 2 == 1)
-				{
-					x++;
-				}
-
 				int[] newarray = new int[x];
 
 				for (int y = 0; y < x; y++)
 				{
-					newarray[y] = array [y + x - 1];
+					newarray[y] = array [y + x + (array.length % 2)];
 				}
 				return search(newarray, target);
 			}
-			else
+			else 
 			{
 				return false;
 			}
+
 		}
 		else
 		{
