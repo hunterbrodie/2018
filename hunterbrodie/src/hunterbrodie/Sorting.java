@@ -69,7 +69,7 @@ public class Sorting {
 					greatx++;
 				}
 			}
-
+			
 			lessarr = quicksort(lessarr);
 			greatarr = quicksort(greatarr);
 
