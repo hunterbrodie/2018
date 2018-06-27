@@ -31,6 +31,18 @@ public class Card {
 	public void setValue(int v)
 	{
 		value = v;
+		switch(value)
+		{
+		case 1: cardName = "Ace";
+		break;
+		case 11: cardName = "Jack";
+		break;
+		case 12: cardName = "Queen";
+		break;
+		case 13: cardName = "King";
+		break;
+		default: cardName = value + "";
+		}
 	}
 	public String getSuit()
 	{
@@ -43,5 +55,9 @@ public class Card {
 	public String getName()
 	{
 		return cardName;
+	}
+	public String fullName()
+	{
+		return cardName + " of " + suit;
 	}
 }
