@@ -6,7 +6,9 @@ public class Sorting {
 
 	public static void main(String[] args) {
 		Random rand = new Random();
-			int[] arr = new int[10];
+		int[] arr = new int[rand.nextInt(25)];
+		while (true)
+		{
 			for (int x = 0; x < arr.length; x++)
 			{
 				arr[x] = rand.nextInt(50);
@@ -15,77 +17,76 @@ public class Sorting {
 			System.out.println();
 			arr = quicksort(arr);
 
-			/*for (int x = 0; x < arr.length; x++)
+			for (int x = 0; x < arr.length; x++)
 			{
 				System.out.println(arr[x]);
 			}
-			System.out.println("");*/
+			System.out.println("");
+			int[] newarr = arr;
+			Arrays.sort(newarr);
+			if(!(arr.equals(newarr))) {
+				break;
+			}
+		}
 	}
 
 	public static int[] quicksort(int[] arr)
 	{
 		if (arr.length > 1)
 		{
-			int greatnum = 0;
-			int lessnum = 0;
-			for (int x = 0; x < arr.length; x++)
+			int less = 0;
+			int same = 1;
+			int great = 0;
+			for (int x = 1; x < arr.length; x++)
 			{
-				if (arr[0] > arr[x])
+				if(arr[0] > arr[x])
 				{
-					greatnum++;
+					less++;
 				}
 				else if (arr[0] < arr[x])
 				{
-					lessnum++;
+					great++;
+				}
+				else if (arr[0] == arr[x])
+				{
+					same++;
 				}
 			}
-			int[] less = new int[lessnum];
-			int[] great = new int[greatnum];
-			int gz = 0;
-			int lz = 0;
-			for (int x = 0; x < arr.length - 1; x++)
+			int[] lessarr = new int[less];
+			int[] greatarr =new int[great];
+			int greatx = 0;
+			int lessx = 0;
+			for (int x = 1; x < arr.length; x++)
 			{
-				if (arr[0] > arr[x])
+				if(arr[0] > arr[x])
 				{
-					great[gz] = arr[x];
-					gz++;
+					lessarr[lessx] = arr[x];
+					lessx++;
 				}
 				else if (arr[0] < arr[x])
 				{
-					less[lz] = arr[x];
-					lz++;
+					greatarr[greatx] = arr[x];
+					greatx++;
 				}
 			}
-			for (int x = 0; x < great.length; x++)
+
+			lessarr = quicksort(lessarr);
+			greatarr = quicksort(greatarr);
+
+			int phold = arr[0];
+			for (int x = 0; x < less; x++)
 			{
-				System.out.println(great[x]);
+				arr[x] = lessarr[x];
 			}
-			System.out.println();
-				//less = quicksort(less);
-				//great = quicksort(great);
-			/*for (int x = 0; x < great.length; x++)
-			{
-				System.out.println(great[x]);
-			}
-			System.out.println();
-			for (int x = 0; x < arr.length; x++)
-			{
-				System.out.println(great[x]);
-			}
-			System.out.println("one above is arr");*/
-			/*int phold = arr[0];
-			for (int x = lessnum; x < greatnum; x++)
+			for (int x = less; x < less + same; x++)
 			{
 				arr[x] = phold;
 			}
-			for (int x = 0; x < lessnum; x++)
+			for (int x = 0; x < great; x++)
 			{
-				arr[x] = less[x];
+				arr[x + less + same] = greatarr[x];
 			}
-			for (int x = greatnum; x < arr.length; x++)
-			{
-				arr[x] = great[x - greatnum];
-			}*/
+		
 		}
 		return arr;
 	}
