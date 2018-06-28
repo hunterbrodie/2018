@@ -1,22 +1,20 @@
 package hunterbrodie;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Deck {
 
-	private Card[] cards;
-	private int dealcount;
+	private ArrayList<Card> cards;
 
 	public Deck()
 	{
-		cards = new Card[52];
+		cards = new ArrayList<Card>();
 	}
 
 	public void reset()
 	{
-		dealcount = 0;
 		String suitName = "";
-		int z = 0;
 		for (int x = 1; x <= 4; x++)
 		{
 			switch (x)
@@ -32,8 +30,7 @@ public class Deck {
 			for (int y = 1; y < 14; y++)
 			{
 				Card card = new Card(y, suitName);
-				cards[z] = card;
-				z++;
+				cards.add(card);
 			}
 		}
 	}
@@ -41,38 +38,34 @@ public class Deck {
 	public String get(int x)
 	{
 		Card card = new Card(x, "Spades");
-		card = cards[x];
+		card = cards.get(x);
 		return card.fullName();
 	}
 
 	public void shuffle()
 	{
 		Random rand = new Random();
-
+		
+		Card phold;
+		
 		for (int x = 0; x < 52; x++)
 		{
-			Card phold;
 			int x1 = rand.nextInt(52);
 			int x2 = rand.nextInt(52);
-			phold = cards[x1];
-			cards[x1] = cards[x2];
-			cards[x2] = phold;
+
+			phold = cards.get(x1);
+			cards.set(x1, cards.get(x2));
+			cards.set(x2, phold);
 		}
 	}
 
 	public Card deal()
 	{
 		Card card = new Card(0, "");
-		if (dealcount == 52)
-		{
-			reset();
-			shuffle();
-			dealcount = 0;
-		}
 		
-		card = cards[dealcount];
-		dealcount++;
-
+		card = cards.get(0);
+		cards.remove(0);
+		
 		return card;
 	}
 
