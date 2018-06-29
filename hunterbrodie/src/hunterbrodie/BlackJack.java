@@ -6,8 +6,6 @@ import java.util.Scanner;
 public class BlackJack {
 
 	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
-		Card card = new Card(0, "");
 		Deck deck = new Deck();
 		deck.reset();
 		deck.shuffle();
@@ -20,37 +18,25 @@ public class BlackJack {
 			dealhand.add(deck.deal());
 			playerhand.add(deck.deal());
 		}
-		
-		int z = 0;
-		int i = 0;
-		
-		while (true)
+
+
+		int x = check(playerhand);
+		int y = check(dealhand);
+		if (x == 2 && y == 2)
 		{
-			
-			int x = check(playerhand);
-			int y = check(dealhand);
-			if (x == 2 && y == 2)
-			{
-				System.out.println("Both have BlackJack, both tie");
-				System.exit(0);
-			}
-			wincheck("Player", x, playerhand, dealhand);
-			wincheck("Dealer", y, playerhand, dealhand);
-			print(dealhand, playerhand, dealhand.size() - 1, playerhand.size());
-			pturn(playerhand, deck, dealhand);
-			dturn(dealhand, deck, playerhand);
-			System.out.println();
-			if(z == playerhand.size() && i == dealhand.size())
-			{
-				checkwin(playerhand, dealhand);
-				System.exit(0);
-			}
-			z = playerhand.size();
-			i = dealhand.size();
+			System.out.println("Both have BlackJack, both tie");
+			System.exit(0);
 		}
+		wincheck("Player", x, playerhand, dealhand);
+		wincheck("Dealer", y, playerhand, dealhand);
+		print(dealhand, playerhand, dealhand.size() - 1, playerhand.size());
+		pturn(playerhand, deck, dealhand);
+		dturn(dealhand, deck, playerhand);
+		System.out.println();
+		checkwin(playerhand, dealhand);
 
 	}
-	
+
 	public static void endprint(ArrayList<Card> phand, ArrayList<Card> dhand)
 	{
 		System.out.println();
@@ -66,33 +52,33 @@ public class BlackJack {
 			System.out.println(phand.get(x).fullName());
 		}
 	}
-	
+
 	public static void checkwin(ArrayList<Card> phand, ArrayList<Card> dhand)
 	{
 		if(handsize(phand) == handsize(dhand))
 		{
 			System.out.println("Both have same value, both tie");
-			
+
 			endprint(phand, dhand);
 		}
 		else if (handsize(phand) > handsize(dhand))
 		{
 			System.out.println("Player wins");
-			
+
 			endprint(phand, dhand);
 		}
 		else
 		{
 			System.out.println("Dealer wins");
-			
+
 			endprint(phand, dhand);
 		}
 	}
 
 	public static void print(ArrayList<Card> dealhand, ArrayList<Card> playerhand, int upcard, int pcard)
 	{
-		System.out.println("The dealer's upcard is:");
-		for (int x = 0; x < upcard; x++)
+		System.out.println("The dealer's upcards are:");
+		for (int x = 1; x < upcard + 1; x++)
 		{
 			System.out.println(dealhand.get(x).fullName());
 		}
@@ -132,28 +118,27 @@ public class BlackJack {
 	{
 		int size = 0;
 		int valcheck = 0;
-		int oval = 0;
 
 		for (int x = 0; x < hand.size(); x++)
 		{
+			int z = hand.get(x).getValue();
 			if (hand.get(x).getValue() == 1)
 			{
 				valcheck = 1;
 			}
 			else if(hand.get(x).getValue() > 10)
 			{
-				valcheck = 2;
-				oval = hand.get(x).getValue();
+				z = 10;
 			}
-			size += hand.get(x).getValue();
+			size += z;
 		}
 
-		size = valcheck(valcheck, size, oval);
+		size = valcheck(valcheck, size);
 
 		return size;
 	}
 
-	public static int valcheck(int val, int other, int oval)
+	public static int valcheck(int val, int other)
 	{
 		if (val == 1)
 		{
@@ -166,12 +151,6 @@ public class BlackJack {
 			{
 				return other + 11;
 			}
-		}
-		else if (val == 2)
-		{
-			other = other - oval;
-			int x = other + 10;
-			return x;
 		}
 		else
 		{
@@ -211,12 +190,15 @@ public class BlackJack {
 			wincheck("Player", x, hand, dhand);
 			System.out.println();
 			System.out.println("Hit or Stay?");
-			if (scan.nextLine().toLowerCase().equals("hit"))
+			String choice = scan.nextLine();
+
+			if (choice.toLowerCase().equals("hit"))
 			{
 				hand.add(deck.deal());
 				playerprint(hand, hand.size());
+				System.out.println();
 			}
-			else 
+			else if (choice.toLowerCase().equals("stay"))
 			{
 				turn = false;
 			}
@@ -225,18 +207,16 @@ public class BlackJack {
 
 		return hand;
 	}
-	
+
 	public static void wincheck(String player, int x, ArrayList<Card> phand, ArrayList<Card> dhand)
 	{
 		switch(x + 1)
 		{
 		case 1: System.out.println(player + " went bust, " + player +" Loses");
 		endprint(phand, dhand);
-		System.exit(0);
 		break;
 		case 3: System.out.println(player + " has BlackJack, " + player + " Wins");
 		endprint(phand, dhand);
-		System.exit(0);
 		}
 	}
 
